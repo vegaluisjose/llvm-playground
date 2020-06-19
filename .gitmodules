@@ -1,0 +1,3 @@
+[submodule "3rdparty/embench-iot"]
+	path = 3rdparty/embench-iot
+	url = https://github.com/embench/embench-iot.git
