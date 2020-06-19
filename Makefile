@@ -3,21 +3,21 @@ CFLAGS = -I$(EMBENCH_DIR)/support -DCPU_MHZ=1
 BUILD_DIR = $(abspath .)/build
 
 NAME = matmult-int
-PASS_LIB = $(BUILD_DIR)/pass/hello/libHelloPass.so
-PASS_NAME = hello
+PASS_NAME = dfg
+PASS_LIB = $(BUILD_DIR)/pass/$(PASS_NAME)/lib$(PASS_NAME).so
 
-default: run_pass
+default: build_pass
 
 $(BUILD_DIR):
 	mkdir -p $@
 
-$(PASS_LIB): | $(BUILD_DIR)
+build_pass: | $(BUILD_DIR)
 	cd $(BUILD_DIR) && cmake .. && make && cd ..
 
 $(BUILD_DIR)/$(NAME).ll: | $(BUILD_DIR)
 	clang $(CFLAGS) -emit-llvm -Xclang -disable-O0-optnone -S $(EMBENCH_DIR)/src/$(NAME)/$(NAME).c -o $@
 
-run_pass: $(PASS_LIB) $(BUILD_DIR)/$(NAME).ll
+run_pass: build_pass $(BUILD_DIR)/$(NAME).ll
 	opt -load $(PASS_LIB) -$(PASS_NAME) < $(BUILD_DIR)/$(NAME).ll > /dev/null
 
 clean:
