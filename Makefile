@@ -3,7 +3,7 @@ CFLAGS = -I$(EMBENCH_DIR)/support -DCPU_MHZ=1
 BUILD_DIR = $(abspath .)/build
 
 NAME = matmult-int
-PASS_NAME = dfg
+PASS_NAME = instr
 PASS_LIB = $(BUILD_DIR)/pass/$(PASS_NAME)/lib$(PASS_NAME).so
 
 default: build_pass

@@ -21,12 +21,12 @@ using namespace std;
 
 namespace {
 
-  struct DFG : public ModulePass {
+  struct Instr : public ModulePass {
     static char ID;
 
-    DFG() : ModulePass(ID) { }
+    Instr() : ModulePass(ID) { }
 
-    ~DFG() {}
+    ~Instr() {}
 
     string stringifyValue(Value &V) {
       string ValueString;
@@ -65,7 +65,6 @@ namespace {
   };
 }
 
-char DFG::ID = 0;
+char Instr::ID = 0;
 
-// Register the pass so `opt -dfg-pass` runs it.
-static RegisterPass<DFG> Y("dfg", "Data flow graph construction pass");
+static RegisterPass<Instr> Y("instr", "pass for printing instructions");
